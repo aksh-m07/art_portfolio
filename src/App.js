@@ -11,6 +11,8 @@ function AppContent() {
   const [activeCollection, setActiveCollection] = useState('photography');
   const [viewMode, setViewMode] = useState('home'); // 'home', 'carousel', or 'grid'
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
   // const [showContactForm, setShowContactForm] = useState(false);
   // const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   // const [contactForm, setContactForm] = useState({
@@ -343,6 +345,33 @@ function AppContent() {
     setCurrentImageIndex((prevIndex) => 
       prevIndex === 0 ? homeCarouselImages.length - 1 : prevIndex - 1
     );
+  };
+
+  // Swipe functionality
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextImage();
+    }
+    if (isRightSwipe) {
+      prevImage();
+    }
   };
 
   // Updated tab handlers to always open the correct tab and close others
@@ -687,8 +716,13 @@ function AppContent() {
           {viewMode === 'home' && (
             <div className="home-content">
               <h2 className="recent-updates-title">Recent Updates</h2>
-              <div className="image-carousel">
-                <button className="carousel-button prev" onClick={prevImage}>
+              <div 
+                className="image-carousel"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                <button className="carousel-button prev desktop-only" onClick={prevImage}>
                   ‹
                 </button>
                 
@@ -716,7 +750,7 @@ function AppContent() {
                   </a>
                 </div>
                 
-                <button className="carousel-button next" onClick={nextImage}>
+                <button className="carousel-button next desktop-only" onClick={nextImage}>
                   ›
                 </button>
               </div>

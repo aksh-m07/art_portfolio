@@ -322,9 +322,7 @@ body {
   cursor: pointer;
 }
 
-.image-link:hover {
-  /* Removed hover effect */
-}
+
 
 .image-link:hover .image-title {
   opacity: 1;
@@ -364,6 +362,13 @@ body {
   justify-content: center;
   backdrop-filter: blur(10px);
   z-index: 10;
+}
+
+/* Hide arrows on mobile devices */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
 }
 
 .carousel-button:hover {
@@ -798,6 +803,7 @@ body {
   position: absolute;
   bottom: 1rem;
   right: 2rem;
+  margin-top: 5rem;
 }
 
 .footer-copyright p {
@@ -844,6 +850,7 @@ body {
   .footer-copyright {
     bottom: 0.8rem;
     right: 1rem;
+    margin-top: 4rem;
   }
   
   .footer-copyright p {
@@ -888,9 +895,23 @@ body {
   .footer-copyright {
     bottom: 0.5rem;
     right: 0.8rem;
+    margin-top: 3rem;
   }
   
   .footer-copyright p {
     font-size: 0.65rem;
+  }
+}
+
+/* iPhone 12 Pro and similar devices */
+@media (max-width: 390px) {
+  .footer-copyright {
+    bottom: 0.3rem;
+    right: 0.5rem;
+    margin-top: 2.5rem;
+  }
+  
+  .footer-copyright p {
+    font-size: 0.6rem;
   }
 }
