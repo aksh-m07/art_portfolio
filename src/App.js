@@ -754,6 +754,18 @@ function AppContent() {
                   ›
                 </button>
               </div>
+              
+              {/* Carousel Dots */}
+              <div className="carousel-dots">
+                {homeCarouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`carousel-dot ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(index)}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           )}
           
