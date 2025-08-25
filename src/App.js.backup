@@ -1,0 +1,834 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
+import './App.css';
+
+function AppContent() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [collectionsDropdown, setCollectionsDropdown] = useState(false);
+  const [activeCollection, setActiveCollection] = useState('photography');
+  const [viewMode, setViewMode] = useState('carousel'); // 'carousel' or 'grid'
+  const [previousViewMode, setPreviousViewMode] = useState('carousel'); // Track previous view
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    country: '',
+    address: '',
+    city: '',
+    hearAbout: '',
+    email: '',
+    message: ''
+  });
+  const [feedbackForm, setFeedbackForm] = useState({
+    name: '',
+    country: '',
+    address: '',
+    city: '',
+    hearAbout: '',
+    email: '',
+    message: '',
+    navigationEase: '',
+    artRating: '',
+    photographyRating: ''
+  });
+  const [formTouched, setFormTouched] = useState({});
+  const [feedbackFormTouched, setFeedbackFormTouched] = useState({});
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [feedbackFormSubmitted, setFeedbackFormSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init("YOUR_PUBLIC_KEY"); // You'll need to replace this with your actual EmailJS public key
+  }, []);
+
+  // Handle URL changes
+  useEffect(() => {
+    const path = location.pathname;
+    
+    if (path === '/') {
+      setShowContactForm(false);
+      setShowFeedbackForm(false);
+      setCollectionsDropdown(false);
+      setViewMode('carousel');
+    } else if (path === '/contact') {
+      setShowContactForm(true);
+      setShowFeedbackForm(false);
+      setCollectionsDropdown(false);
+      setViewMode('carousel');
+    } else if (path === '/feedback') {
+      setShowFeedbackForm(true);
+      setShowContactForm(false);
+      setCollectionsDropdown(false);
+      setViewMode('carousel');
+    } else if (path.startsWith('/collection/')) {
+      const collection = path.split('/')[2];
+      setActiveCollection(collection);
+      setCurrentImageIndex(0);
+      setShowContactForm(false);
+      setShowFeedbackForm(false);
+      setCollectionsDropdown(false);
+      setViewMode('grid');
+    }
+  }, [location.pathname]);
+
+  // Sample wildlife photography images - you can replace these with actual images
+  const photographyImages = [
+    {
+      id: 1,
+      src: '/ Blue Striped Spider.jpeg',
+      alt: 'Blue Striped Spider in its natural habitat',
+      title: 'Phintella Vittata'
+    },
+    {
+      id: 2,
+      src: '/ants.jpeg',
+      alt: 'Ants working together in nature',
+      title: 'Ants'
+    },
+    {
+      id: 3,
+      src: '/Butterfly_1.jpeg',
+      alt: 'Beautiful butterfly with colorful wings',
+      title: 'Butterfly Beauty'
+    },
+    {
+      id: 4,
+      src: '/Butterfly_2.jpeg',
+      alt: 'Butterfly with delicate wings in natural setting',
+      title: 'Butterfly Wings'
+    },
+    {
+      id: 5,
+      src: '/little egret.jpeg',
+      alt: 'Little Egret bird in its natural habitat',
+      title: 'Little Egret'
+    },
+    {
+      id: 6,
+      src: '/Egret Bird.jpeg',
+      alt: 'Egret bird in its natural habitat',
+      title: 'Egret In The Wild'
+    },
+    {
+      id: 7,
+      src: '/white bengal tiger.jpeg',
+      alt: 'White Bengal Tiger in its natural habitat',
+      title: 'White Bengal Tiger'
+    },
+    {
+      id: 8,
+      src: '/Lioness.jpeg',
+      alt: 'Lioness in its natural habitat',
+      title: 'Lion Queen Of India'
+    },
+    {
+      id: 9,
+      src: '/Indian Tiger.jpeg',
+      alt: 'Indian Tiger in its natural habitat',
+      title: 'Indian Tiger'
+    },
+    {
+      id: 10,
+      src: '/Kingfisher Bird.jpeg',
+      alt: 'Kingfisher bird in its natural habitat',
+      title: 'The Kingfisher'
+    },
+    {
+      id: 11,
+      src: '/House sparrow.jpeg',
+      alt: 'House sparrow in its natural habitat',
+      title: 'House Sparrow'
+    },
+    {
+      id: 12,
+      src: '/moon.jpeg',
+      alt: 'Beautiful moon in the night sky',
+      title: 'Lunar Beauty'
+    },
+    {
+      id: 13,
+      src: '/Mule Deer.jpeg',
+      alt: 'Mule deer in its natural habitat',
+      title: 'Mule Deer'
+    },
+    {
+      id: 14,
+      src: '/Panther.jpeg',
+      alt: 'Panther in its natural habitat',
+      title: 'Panther In The Wild'
+    },
+    {
+      id: 15,
+      src: '/Passer.jpeg',
+      alt: 'Passer bird in its natural habitat',
+      title: 'Passer'
+    },
+    {
+      id: 16,
+      src: '/sloth Bear.jpeg',
+      alt: 'Sloth Bear in its natural habitat',
+      title: 'Sloth Bear'
+    },
+    {
+      id: 17,
+      src: '/Squirewl.jpeg',
+      alt: 'Squirrel in its natural habitat',
+      title: 'Squirrel'
+    },
+    {
+      id: 18,
+      src: '/Tides.jpeg',
+      alt: 'Ocean tides',
+      title: 'Oceanic Tides'
+    },
+    {
+      id: 19,
+      src: '/Water crow.jpeg',
+      alt: 'Water crow in its natural habitat',
+      title: 'Water Crow'
+    }
+  ];
+    {
+      id: 4,
+      src: '/Butterfly_2.jpeg',
+      alt: 'Butterfly with delicate wings in natural setting',
+      title: 'Butterfly Wings'
+    },
+    {
+      id: 5,
+      src: '/little egret.jpeg',
+      alt: 'Little Egret bird in its natural habitat',
+      title: 'Little Egret'
+    },
+    {
+      id: 6,
+      src: '/Egret Bird.jpeg',
+      alt: 'Egret bird in its natural habitat',
+      title: 'Egret In The Wild'
+    },
+    {
+      id: 7,
+      src: '/white bengal tiger.jpeg',
+      alt: 'White Bengal Tiger in its natural habitat',
+      title: 'White Bengal Tiger'
+    },
+    {
+      id: 8,
+      src: '/Screenshot 2025-08-19 at 2.55.15 PM.png',
+      alt: 'Lioness in its natural habitat',
+      title: 'Lion Queen Of India'
+    },
+    {
+      id: 9,
+      src: '/Indian Tiger.jpeg',
+      alt: 'Indian Tiger in its natural habitat',
+      title: 'Indian Tiger'
+    },
+    {
+      id: 10,
+      src: '/Kingfisher Bird.jpeg',
+      alt: '',
+      title: 'The Kingfisher'
+    },
+    {
+      id: 11,
+      src: '/House sparrow.jpeg',
+      alt: 'Penguin colony',
+      title: 'House Sparrow'
+    },
+    {
+      id: 12,
+      src: '/moon.jpeg',
+      alt: 'moon',
+      title: 'Lunar Beauty'
+    },
+    {
+      id: 13,
+      src: '/Mule Deer.jpeg',
+      alt: 'mule deer in its natural habitat',
+      title: 'Mule Deer'
+    },
+    {
+      id: 14,
+      src: '/Panther.jpeg',
+      alt: 'Bear fishing',
+      title: 'Panther In The Wild'
+    },
+    {
+      id: 15,
+      src: '/Passer.jpeg',
+      alt: 'Gorilla family',
+      title: 'Passer'
+    },
+    {
+      id: 16,
+      src: '/Screenshot 2025-08-19 at 3.01.32 PM.png',
+      alt: 'Sloth Bear in its natural habitat',
+      title: 'Sloth Bear'
+    },
+    {
+      id: 17,
+      src: '/Screenshot 2025-08-19 at 3.03.06 PM.png',
+      alt: 'Squirel in its natural habitat',
+      title: 'Squirel' 
+    },
+    {
+      id: 18,
+      src: '/Tides.jpeg',
+      alt: 'tides',
+      title: 'Oceanic Tides'
+    },
+    {
+      id: 19,
+      src: '/Water crow.jpeg',
+      alt: 'Water crow',
+      title: 'Water Crow'
+    },
+  
+  ];
+
+  // Sample art images
+  const artImages = [
+    {
+      id: 1,
+      src: '/Screenshot 2025-07-28 at 4.23.40 PM.png',
+      alt: 'elephant in its natural habitat',
+      title: 'Elephant'
+    },
+    {
+      id: 2,
+      src: '/WhatsApp Image 2025-07-27 at 16.40.40.jpeg',
+      alt: 'ben10',
+      title: 'Ben 10 Four Arms'
+    },
+    {
+      id: 3,
+      src: '/WhatsApp Image 2025-07-28 at 13.44.02.jpeg',
+      alt: 'Iron Man',
+      title: 'Iron Man'
+    },
+    {
+      id: 4,
+      src: '/Screenshot 2025-08-19 at 3.33.16 PM.png',
+      alt: 'Air Force plane',
+      title: 'Air Force Plane'
+    },
+    {
+      id: 5,
+      src: '/WhatsApp Image 2025-07-28 at 16.42.32.jpeg',
+      alt: 'jsja',
+      title: 'Vintage Telephone'
+    },
+    {
+      id: 6,
+      src: '/Screenshot 2025-08-19 at 3.36.19 PM.png',
+      alt: 'Watercolor painting',
+      title: 'Watercolor Flow'
+    },
+    {
+      id: 7,
+      src: '/Screenshot 2025-08-19 at 3.37.58 PM.png',
+      alt: 'War Zone',
+      title: 'War Zone'
+    },
+    {
+      id: 8,
+      src: '/WhatsApp Image 2025-07-28 at 16.44.08.jpeg',
+      alt: 'Ceramic art piece',
+      title: 'Cricketer'
+    },
+    {
+      id: 9,
+      src: '/WhatsApp Image 2025-07-28 at 16.43.50.jpeg',
+      alt: 'Statue of Liberty',
+      title: 'Statue of Liberty'
+    },
+    {
+      id: 10,
+      src: '/anime.jpeg',
+      alt: 'anime',
+      title: 'Anime'
+    },
+    {
+      id: 11,
+      src: '/archer.jpeg',
+      alt: 'Archer',
+      title: 'Archer'
+    },
+    {
+      id: 12,
+      src: '/dino.jpeg',
+      alt: 'T-Rex',
+      title: 'T-Rex'
+    },
+    {
+      id: 13,
+      src: '/bumbelbee.jpeg',
+      alt: 'Bumble Bee',
+      title: 'Bumble Bee'
+    },
+    {
+      id: 14,
+      src: '/samurai.jpeg',
+      alt: 'Samurai Warrior',
+      title: 'Samurai Warrior'
+    },
+    {
+      id: 15,
+      src: '/ben 10.jpeg',
+      alt: 'Ben 10',
+      title: 'Ben 10'
+    },
+    {
+      id: 16,
+      src: '/spiderman.jpeg',
+      alt: 'Spiderman',
+      title: 'Spider Man'
+    },
+    
+    
+    
+
+  ];
+
+  const images = activeCollection === 'photography' ? photographyImages : artImages;
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Updated tab handlers to always open the correct tab and close others
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    setPreviousViewMode(viewMode); // Store current view before opening form
+    setShowContactForm(true);
+    setShowFeedbackForm(false);
+    setCollectionsDropdown(false);
+    setViewMode('carousel');
+    navigate('/contact');
+  };
+
+  const handleFeedbackClick = (e) => {
+    e.preventDefault();
+    setPreviousViewMode(viewMode); // Store current view before opening form
+    setShowFeedbackForm(true);
+    setShowContactForm(false);
+    setCollectionsDropdown(false);
+    setViewMode('carousel');
+    navigate('/feedback');
+  };
+
+  const goBackToHome = () => {
+    setShowContactForm(false);
+    setShowFeedbackForm(false);
+    setCollectionsDropdown(false);
+    setViewMode('carousel');
+    navigate('/');
+  };
+
+  const toggleCollectionsDropdown = () => {
+    setShowContactForm(false);
+    setShowFeedbackForm(false);
+    setCollectionsDropdown((prev) => !prev);
+    // If coming from contact or feedback forms, hide all content until collection is selected
+    if (showContactForm || showFeedbackForm) {
+      setViewMode('none');
+    }
+    // Otherwise keep the current view (carousel or grid)
+  };
+
+  const selectCollection = (collection) => {
+    setActiveCollection(collection);
+    setCurrentImageIndex(0);
+    setCollectionsDropdown(false);
+    setShowContactForm(false);
+    setShowFeedbackForm(false);
+    setViewMode('grid'); // Switch to grid view when selecting a collection
+    navigate(`/collection/${collection}`);
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm((prev) => ({ ...prev, [name]: value }));
+    setFormTouched((prev) => ({ ...prev, [name]: true }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+    
+    // Check if all fields are filled
+    const allFilled = Object.values(contactForm).every((v) => v.trim() !== '');
+    
+    if (allFilled) {
+      // Prepare email template parameters
+      const templateParams = {
+        to_email: 'akshmalik.am@gmail.com',
+        from_name: contactForm.name,
+        from_email: contactForm.email,
+        country: contactForm.country,
+        address: contactForm.address,
+        city: contactForm.city,
+        hear_about: contactForm.hearAbout,
+        message: contactForm.message,
+        reply_to: contactForm.email
+      };
+
+      // Send email using EmailJS
+      emailjs.send(
+        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        templateParams
+      )
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you for contacting me! I will get back to you soon.');
+        setShowContactForm(false);
+        setContactForm({
+          name: '', country: '', address: '', city: '', hearAbout: '', email: '', message: ''
+        });
+        setFormTouched({});
+        setFormSubmitted(false);
+      })
+      .catch((error) => {
+        console.log('FAILED...', error);
+        alert('Sorry, there was an error sending your message. Please try again or contact me directly at akshmalik.am@gmail.com');
+      });
+    }
+  };
+
+  const handleCloseForm = () => {
+    setShowContactForm(false);
+    setFormSubmitted(false);
+  };
+
+  const handleFeedbackFormChange = (e) => {
+    const { name, value } = e.target;
+    setFeedbackForm((prev) => ({ ...prev, [name]: value }));
+    setFeedbackFormTouched((prev) => ({ ...prev, [name]: true }));
+  };
+
+  const handleFeedbackFormSubmit = (e) => {
+    e.preventDefault();
+    setFeedbackFormSubmitted(true);
+    
+    // Check if all fields are filled
+    const allFilled = Object.values(feedbackForm).every((v) => v.trim() !== '');
+    
+    if (allFilled) {
+      // Prepare email template parameters
+      const templateParams = {
+        to_email: 'akshmalik.am@gmail.com',
+        from_name: feedbackForm.name,
+        from_email: feedbackForm.email,
+        country: feedbackForm.country,
+        address: feedbackForm.address,
+        city: feedbackForm.city,
+        hear_about: feedbackForm.hearAbout,
+        message: feedbackForm.message,
+        navigation_ease: feedbackForm.navigationEase,
+        art_rating: feedbackForm.artRating,
+        photography_rating: feedbackForm.photographyRating,
+        reply_to: feedbackForm.email,
+        subject: 'New Feedback Submission'
+      };
+
+      // Send email using EmailJS
+      emailjs.send(
+        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        templateParams
+      )
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you for your feedback! I appreciate your input.');
+        setShowFeedbackForm(false);
+        setFeedbackForm({
+          name: '', country: '', address: '', city: '', hearAbout: '', email: '', comment: '',
+          navigationEase: '', artRating: '', photographyRating: ''
+        });
+        setFeedbackFormTouched({});
+        setFeedbackFormSubmitted(false);
+      })
+      .catch((error) => {
+        console.log('FAILED...', error);
+        alert('Sorry, there was an error sending your feedback. Please try again or contact me directly at akshmalik.am@gmail.com');
+      });
+    }
+  };
+
+  const handleCloseFeedbackForm = () => {
+    setShowFeedbackForm(false);
+    setFeedbackFormSubmitted(false);
+  };
+
+  return (
+    <div className="App">
+      {/* Header Section */}
+      <header className="header">
+        <div className="header-content">
+          <h1 className="name">AKSH MALIK</h1>
+          <nav className="navigation">
+            <button onClick={goBackToHome} className="nav-link">HOME</button>
+            <div className="nav-dropdown">
+              <button 
+                className="nav-link dropdown-toggle" 
+                onClick={toggleCollectionsDropdown}
+              >
+                COLLECTIONS ▼
+              </button>
+              {collectionsDropdown && (
+                <div className="dropdown-menu">
+                  <button 
+                    className="dropdown-item"
+                    onClick={() => selectCollection('photography')}
+                  >
+                    Photography
+                  </button>
+                  <button 
+                    className="dropdown-item"
+                    onClick={() => selectCollection('art')}
+                  >
+                    Art
+                  </button>
+                </div>
+              )}
+            </div>
+            <button onClick={handleContactClick} className="nav-link">CONTACT</button>
+            <button onClick={handleFeedbackClick} className="nav-link">FEEDBACK</button>
+          </nav>
+        </div>
+      </header>
+
+      {/* Contact Form Modal */}
+      {showContactForm && (
+        <div className="contact-form-modal">
+          <div className="contact-form-container">
+            <button className="close-form" onClick={handleCloseForm}>&times;</button>
+            <h2>Contact Me</h2>
+            <form className="contact-form" onSubmit={handleFormSubmit} noValidate>
+              <div className="form-group">
+                <label>Name</label>
+                <input type="text" name="name" value={contactForm.name} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.name && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Country</label>
+                <input type="text" name="country" value={contactForm.country} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.country && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Address</label>
+                <input type="text" name="address" value={contactForm.address} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.address && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>City</label>
+                <input type="text" name="city" value={contactForm.city} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.city && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>How did you hear about me?</label>
+                <input type="text" name="hearAbout" value={contactForm.hearAbout} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.hearAbout && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" value={contactForm.email} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.email && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Message</label>
+                <textarea name="message" value={contactForm.message} onChange={handleFormChange} required />
+                {formSubmitted && !contactForm.message && <span className="form-error">Required</span>}
+              </div>
+              <button type="submit" className="submit-btn">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Feedback Form Modal */}
+      {showFeedbackForm && (
+        <div className="contact-form-modal">
+          <div className="contact-form-container">
+            <button className="close-form" onClick={handleCloseFeedbackForm}>&times;</button>
+            <h2>Feedback</h2>
+            <form className="contact-form" onSubmit={handleFeedbackFormSubmit} noValidate>
+              <div className="form-group">
+                <label>Name</label>
+                <input type="text" name="name" value={feedbackForm.name} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.name && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Country</label>
+                <input type="text" name="country" value={feedbackForm.country} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.country && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Address</label>
+                <input type="text" name="address" value={feedbackForm.address} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.address && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>City</label>
+                <input type="text" name="city" value={feedbackForm.city} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.city && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>How did you hear about me?</label>
+                <input type="text" name="hearAbout" value={feedbackForm.hearAbout} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.hearAbout && <span className="form-error">Required</span>}
+              </div>
+              <div className="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" value={feedbackForm.email} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.email && <span className="form-error">Required</span>}
+              </div>
+              
+              {/* New Feedback Questions */}
+              <div className="form-group">
+                <label>Did you find my website easy to navigate?</label>
+                <select name="navigationEase" value={feedbackForm.navigationEase} onChange={handleFeedbackFormChange} required>
+                  <option value="">Select an option</option>
+                  <option value="very easy">Very Easy</option>
+                  <option value="fairly easy">Fairly Easy</option>
+                  <option value="difficult">Difficult</option>
+                </select>
+                {feedbackFormSubmitted && !feedbackForm.navigationEase && <span className="form-error">Required</span>}
+              </div>
+              
+              <div className="form-group">
+                <label>How will you rate my art?</label>
+                <select name="artRating" value={feedbackForm.artRating} onChange={handleFeedbackFormChange} required>
+                  <option value="">Select a rating</option>
+                  <option value="1">1 - Poor</option>
+                  <option value="2">2 - Fair</option>
+                  <option value="3">3 - Good</option>
+                  <option value="4">4 - Very Good</option>
+                  <option value="5">5 - Excellent</option>
+                </select>
+                {feedbackFormSubmitted && !feedbackForm.artRating && <span className="form-error">Required</span>}
+              </div>
+              
+              <div className="form-group">
+                <label>How will you rate my photography skills?</label>
+                <select name="photographyRating" value={feedbackForm.photographyRating} onChange={handleFeedbackFormChange} required>
+                  <option value="">Select a rating</option>
+                  <option value="1">1 - Poor</option>
+                  <option value="2">2 - Fair</option>
+                  <option value="3">3 - Good</option>
+                  <option value="4">4 - Very Good</option>
+                  <option value="5">5 - Excellent</option>
+                </select>
+                {feedbackFormSubmitted && !feedbackForm.photographyRating && <span className="form-error">Required</span>}
+              </div>
+              
+              <div className="form-group">
+                <label>Comment</label>
+                <textarea name="message" value={feedbackForm.message} onChange={handleFeedbackFormChange} required />
+                {feedbackFormSubmitted && !feedbackForm.message && <span className="form-error">Required</span>}
+              </div>
+              <button type="submit" className="submit-btn">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      {!showContactForm && !showFeedbackForm && viewMode !== 'none' && (
+        <main className="main-content">
+          {viewMode === 'carousel' ? (
+            <div className="image-carousel">
+              <button className="carousel-button prev" onClick={prevImage}>
+                ‹
+              </button>
+              
+              <div className="image-container">
+                <a 
+                  href={images[currentImageIndex].src} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="image-link"
+                >
+                  <img 
+                    src={images[currentImageIndex].src} 
+                    alt={images[currentImageIndex].alt}
+                    className="main-image"
+                  />
+                  <div className="image-title">
+                    {images[currentImageIndex].title}
+                  </div>
+                </a>
+              </div>
+              
+              <button className="carousel-button next" onClick={nextImage}>
+                ›
+              </button>
+            </div>
+          ) : (
+            <div className="grid-view">
+              <div className="collection-header">
+                <h2 className="collection-title">
+                  {activeCollection === 'photography' ? 'Photography Collection' : 'Art Collection'}
+                </h2>
+                <p className="collection-subtitle">
+                  {activeCollection === 'photography' 
+                    ? 'Disclamer: All images are taken by me and are property of Aksh Malik'
+                     + '.You may click on a specific image to view it in full size.'
+                    : 'Disclamer: All Drawings are created by me and are property of Aksh Malik'
+                     + '.You may click on a specific image to view it in full size'
+                  }
+                </p>
+              </div>
+              <div className="image-grid">
+                {images.map((image) => (
+                  <div key={image.id} className="grid-item">
+                    <a 
+                      href={image.src} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="grid-image-link"
+                    >
+                      <img 
+                        src={image.src} 
+                        alt={image.alt}
+                        className="grid-image"
+                      />
+                      <div className="grid-image-overlay">
+                        <h3 className="grid-image-title">{image.title}</h3>
+                      </div>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </main>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/*" element={<AppContent />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
