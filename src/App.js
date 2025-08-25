@@ -10,7 +10,6 @@ function AppContent() {
   const [collectionsDropdown, setCollectionsDropdown] = useState(false);
   const [activeCollection, setActiveCollection] = useState('photography');
   const [viewMode, setViewMode] = useState('home'); // 'home', 'carousel', or 'grid'
-  const [previousViewMode, setPreviousViewMode] = useState('home'); // Track previous view
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // const [showContactForm, setShowContactForm] = useState(false);
   // const [showFeedbackForm, setShowFeedbackForm] = useState(false);
@@ -35,9 +34,7 @@ function AppContent() {
   //   artRating: '',
   //   photographyRating: ''
   // });
-  const [formTouched, setFormTouched] = useState({});
   // const [feedbackFormTouched, setFeedbackFormTouched] = useState({});
-  const [formSubmitted, setFormSubmitted] = useState(false);
   // const [feedbackFormSubmitted, setFeedbackFormSubmitted] = useState(false);
 
   useEffect(() => {
