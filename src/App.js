@@ -182,15 +182,15 @@ function AppContent() {
     },
     {
       id: 16,
-      src: '/photos/Screenshot 2025-08-19 at 3.01.32 PM.png',
+      src: '/photos/slothbear.png',
       alt: 'Sloth Bear in its natural habitat',
       title: 'Sloth Bear'
     },
     {
       id: 17,
-      src: '/photos/Squirewl.jpeg',
+      src: '/photos/squirrel.jpeg',
       alt: 'Squirrel in its natural habitat',
-      title: 'Squirrel'
+      title: 'squirrel'
     },
     {
       id: 18,
@@ -210,55 +210,55 @@ function AppContent() {
   const artImages = [
     {
       id: 1,
-      src: '/art/Screenshot 2025-07-28 at 4.23.40 PM.png',
+      src: '/art/elephant.png',
       alt: 'elephant in its natural habitat',
       title: 'Elephant'
     },
     {
       id: 2,
-      src: '/art/WhatsApp Image 2025-07-27 at 16.40.40.jpeg',
+      src: '/art/ben10fourarms.jpeg',
       alt: 'ben10',
       title: 'Ben 10 Four Arms'
     },
     {
       id: 3,
-      src: '/art/WhatsApp Image 2025-07-28 at 13.44.02.jpeg',
+      src: '/art/ironman.jpeg',
       alt: 'Iron Man',
       title: 'Iron Man'
     },
     {
       id: 4,
-      src: '/art/Screenshot 2025-08-19 at 3.33.16 PM.png',
+      src: '/art/airforce.png',
       alt: 'Air Force plane',
       title: 'Air Force Plane'
     },
     {
       id: 5,
-      src: '/art/WhatsApp Image 2025-07-28 at 16.42.32.jpeg',
+      src: '/art/vintagephone.jpeg',
       alt: 'jsja',
       title: 'Vintage Telephone'
     },
     {
       id: 6,
-      src: '/art/Screenshot 2025-08-19 at 3.36.19 PM.png',
+      src: '/art/bean.png',
       alt: 'Watercolor painting',
       title: 'Mr.Bean'
     },
     {
       id: 7,
-      src: '/art/Screenshot 2025-08-19 at 3.37.58 PM.png',
+      src: '/art/warzone.png',
       alt: 'War Zone',
       title: 'War Zone'
     },
     {
       id: 8,
-      src: '/art/WhatsApp Image 2025-07-28 at 16.44.08.jpeg',
+      src: '/art/cricketer.jpeg',
       alt: 'Ceramic art piece',
       title: 'Cricketer'
     },
     {
       id: 9,
-      src: '/art/WhatsApp Image 2025-07-28 at 16.43.50.jpeg',
+      src: '/art/statueofliberty.jpeg',
       alt: 'Statue of Liberty',
       title: 'Statue of Liberty'
     },
@@ -303,6 +303,12 @@ function AppContent() {
       src: '/art/spiderman.jpeg',
       alt: 'Spiderman',
       title: 'Spider Man'
+    },
+    {
+      id: 17,
+      src: '/art/greekwarrior.jpeg',
+      alt: 'gw',
+      title: 'Greek Warrior'
     },
     
     
