@@ -310,6 +310,49 @@ function AppContent() {
       alt: 'gw',
       title: 'Greek Warrior'
     },
+    {
+      id: 18,
+      src: '/art/Scorpian.jpeg',
+      alt: 'scorpian',
+      title: 'Scorpian'
+    },
+    {
+      id: 19,
+      src: '/art/Spider Man.jpeg',
+      alt: 'spiderman 2',
+      title: 'Spider Man 2'
+    },  
+    {
+      id: 20,
+      src: '/art/young man.jpeg',
+      alt: 'young man',
+      title: 'Young Man'
+    },  
+    {
+      id: 21,
+      src: '/art/hen.jpeg',
+      alt: 'hen',
+      title: 'Hen'
+    },  
+    {
+      id: 22,
+      src: '/art/duckling.jpeg',
+      alt: 'duckling',
+      title: 'Duckling'
+    },  
+    {
+      id: 23,
+      src: '/art/dog.jpeg',
+      alt: 'dog',
+      title: 'Dog'
+    },  
+    {
+      id: 24,
+      src: '/art/Balloon Dog.jpeg',
+      alt: 'balloon dog',
+      title: 'Balloon Dog'
+    },  
+    
     
     
     
@@ -320,21 +363,21 @@ function AppContent() {
   const homeCarouselImages = [
     {
       id: 1,
-      src: '/photos/little egret.jpeg',
-      alt: 'Little Egret bird in its natural habitat',
-      title: 'Little Egret'
+      src: '/art/Balloon Dog.jpeg',
+      alt: 'balloon dog',
+      title: 'Balloon Dog'
     },
     {
       id: 2,
-      src: '/photos/Water crow.jpeg',
-      alt: 'Water crow in its natural habitat',
-      title: 'Water Crow'
+      src: '/art/hen.jpeg',
+      alt: 'hen',
+      title: 'Hen' 
     },
     {
       id: 3,
-      src: '/art/archer.jpeg',
-      alt: 'Archer',
-      title: 'Archer'
+      src: '/art/Spider Man.jpeg',
+      alt: 'spiderman',
+      title: 'Spider Man 2'
     }
   ];
 
