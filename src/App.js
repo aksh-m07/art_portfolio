@@ -327,6 +327,24 @@ function AppContent() {
       alt: 'balloon dog',
       title: 'Balloon Dog'
     },  
+    {
+      id: 25,
+      src: '/art/Buzz Lightyear.jpeg',
+      alt: 'Buzz Lightyear',
+      title: 'Buzz Lightyear'
+    },
+    {
+      id: 26,
+      src: '/art/Love_1.jpeg',
+      alt: 'Love_1',
+      title: 'Love_1' 
+    },
+    {
+      id: 27,
+      src: '/art/Love_2.jpeg',
+      alt: 'Love_2',
+      title: 'Love_2'
+    }
     
     
     
@@ -338,21 +356,21 @@ function AppContent() {
   const homeCarouselImages = [
     {
       id: 1,
-      src: '/art/Balloon Dog.jpeg',
-      alt: 'balloon dog',
-      title: 'Balloon Dog'
+      src: '/art/Buzz Lightyear.jpeg',
+      alt: 'Buzz Lightyear',
+      title: 'Buzz Lightyear'
     },
     {
       id: 2,
-      src: '/art/hen.jpeg',
-      alt: 'hen',
-      title: 'Hen' 
+      src: '/art/Love_1.jpeg',
+      alt: 'Love_1',
+      title: 'Love_1' 
     },
     {
       id: 3,
-      src: '/art/Spider Man.jpeg',
-      alt: 'spiderman',
-      title: 'Spider Man 2'
+      src: '/art/Love_2.jpeg',
+      alt: 'Love_2',
+      title: 'Love_2'
     }
   ];
 
