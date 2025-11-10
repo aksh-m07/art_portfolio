@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Aksh Malik Art Portfolio
 
-Aksh Malik Art Portfolio
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## About
 
